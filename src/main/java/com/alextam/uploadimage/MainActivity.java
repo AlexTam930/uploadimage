@@ -179,6 +179,9 @@ public class MainActivity extends Activity
                                     Toast.makeText(MainActivity.this,
                                             "请去\"设置\"中开启本应用的图片媒体访问权限",
                                             Toast.LENGTH_SHORT).show();
+
+                                    restoreUploadMsg();
+                                    requestPermissionsAndroidM();
                                     return;
                                 }
 
@@ -192,6 +195,7 @@ public class MainActivity extends Activity
                                 Toast.makeText(MainActivity.this,
                                         "请去\"设置\"中开启本应用的图片媒体访问权限",
                                         Toast.LENGTH_SHORT).show();
+                                restoreUploadMsg();
                             }
 
                         } else {
@@ -200,6 +204,9 @@ public class MainActivity extends Activity
                                     Toast.makeText(MainActivity.this,
                                             "请去\"设置\"中开启本应用的图片媒体访问权限",
                                             Toast.LENGTH_SHORT).show();
+
+                                    restoreUploadMsg();
+                                    requestPermissionsAndroidM();
                                     return;
                                 }
 
@@ -207,6 +214,9 @@ public class MainActivity extends Activity
                                     Toast.makeText(MainActivity.this,
                                             "请去\"设置\"中开启本应用的相机权限",
                                             Toast.LENGTH_SHORT).show();
+
+                                    restoreUploadMsg();
+                                    requestPermissionsAndroidM();
                                     return;
                                 }
                             }
@@ -220,6 +230,8 @@ public class MainActivity extends Activity
                                 Toast.makeText(MainActivity.this,
                                         "请去\"设置\"中开启本应用的相机和图片媒体访问权限",
                                         Toast.LENGTH_SHORT).show();
+
+                                restoreUploadMsg();
                             }
                         }
                     }
@@ -240,14 +252,18 @@ public class MainActivity extends Activity
     private class DialogOnCancelListener implements DialogInterface.OnCancelListener {
         @Override
         public void onCancel(DialogInterface dialogInterface) {
-            if (mUploadMsg != null) {
-                mUploadMsg.onReceiveValue(null);
-                mUploadMsg = null;
+            restoreUploadMsg();
+        }
+    }
 
-            } else if (mUploadMsgForAndroid5 != null) {
-                mUploadMsgForAndroid5.onReceiveValue(null);
-                mUploadMsgForAndroid5 = null;
-            }
+    private void restoreUploadMsg() {
+        if (mUploadMsg != null) {
+            mUploadMsg.onReceiveValue(null);
+            mUploadMsg = null;
+
+        } else if (mUploadMsgForAndroid5 != null) {
+            mUploadMsgForAndroid5.onReceiveValue(null);
+            mUploadMsgForAndroid5 = null;
         }
     }
 
@@ -256,7 +272,7 @@ public class MainActivity extends Activity
         switch (requestCode) {
             case P_CODE_PERMISSIONS:
                 requestResult(permissions, grantResults);
-
+                restoreUploadMsg();
                 break;
 
             default:
